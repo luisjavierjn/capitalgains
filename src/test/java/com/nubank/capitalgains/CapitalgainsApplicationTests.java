@@ -1,6 +1,7 @@
 package com.nubank.capitalgains;
 
 import com.nubank.capitalgains.business.TaxService;
+import com.nubank.capitalgains.exceptions.ReadLineException;
 import com.nubank.capitalgains.model.State;
 import com.nubank.capitalgains.utils.FileReaderUtil;
 import java.io.BufferedReader;
@@ -38,7 +39,7 @@ class CapitalgainsApplicationTests {
 				stringBuilder.append(line).append("\n");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ReadLineException("BufferedReader failed while reading line!",e);
 		}
 		return stringBuilder;
 	}

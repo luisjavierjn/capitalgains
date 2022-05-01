@@ -1,6 +1,7 @@
 package com.nubank.capitalgains;
 
 import com.nubank.capitalgains.business.TaxService;
+import com.nubank.capitalgains.exceptions.InputStreamException;
 import com.nubank.capitalgains.utils.FileReaderUtil;
 import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
@@ -20,17 +21,18 @@ public class CapitalgainsApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
-		/*
-		FileSystemResource file = new FileSystemResource(args[0]);
-		FileReaderUtil fileReaderUtil = null;
-		try {
-			fileReaderUtil = new FileReaderUtil(file.getInputStream());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		if(args.length > 0) {
+			FileSystemResource file = new FileSystemResource(args[0]);
+			FileReaderUtil fileReaderUtil;
+			try {
+				fileReaderUtil = new FileReaderUtil(file.getInputStream());
+			} catch (IOException e) {
+				throw new InputStreamException("InputStream could not be obtained!",e);
+			}
+			TaxService taxService = new TaxService(fileReaderUtil);
+			logger.info(taxService.process());
+		} else {
+			logger.error("No parameter found!");
 		}
-		TaxService taxService = new TaxService(fileReaderUtil);
-		logger.info(taxService.process());*/
-		logger.info("Hola Mundo");
 	}
 }

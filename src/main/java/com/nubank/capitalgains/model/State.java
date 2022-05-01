@@ -1,7 +1,6 @@
 package com.nubank.capitalgains.model;
 
 public class State {
-
     double averagePrice;
     double deductibleLoss;
 

@@ -1,7 +1,13 @@
 package com.nubank.capitalgains;
 
-import com.nubank.capitalgains.business.TaxValidator;
+import com.nubank.capitalgains.business.TaxService;
 import com.nubank.capitalgains.model.State;
+import com.nubank.capitalgains.utils.FileReaderUtil;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,19 +20,40 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = CapitalgainsApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CapitalgainsApplicationTests {
-	private State state;
-	private TaxValidator taxValidator;
+	private static final String EXAMPLE_INPUT = "example_input.data";
+	private static final String EXAMPLE_OUTPUT = "example_output.data";
+	private StringBuilder exampleOutput;
+	private TaxService taxService;
+
+	private StringBuilder loadJsonFile(String fileName) {
+		ClassLoader classLoader = getClass().getClassLoader();
+		StringBuilder stringBuilder = new StringBuilder();
+		try (InputStream inputStream = classLoader.getResourceAsStream(fileName);
+			 InputStreamReader streamReader =
+					 new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+			 BufferedReader reader = new BufferedReader(streamReader)) {
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				stringBuilder.append(line).append("\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return stringBuilder;
+	}
 
 	@BeforeAll
 	void contextLoads() {
-		state = new State();
-		taxValidator = new TaxValidator(state);
+		exampleOutput = loadJsonFile(EXAMPLE_OUTPUT);
 	}
 
 	@Test
-	public void testBuyValidation() {
-		String info = "info";
-		taxValidator.validate(info);
-		assertEquals(taxValidator.getTaxResult(),"[{\"tax\":0.00}]");
+	public void testExampleBuyValidation() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		InputStream inputStream = classLoader.getResourceAsStream(EXAMPLE_INPUT);
+		FileReaderUtil fileReaderUtil = new FileReaderUtil(inputStream);
+		taxService = new TaxService(fileReaderUtil);
+		assertEquals(taxService.process(), exampleOutput.toString());
 	}
 }

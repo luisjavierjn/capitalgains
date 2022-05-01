@@ -1,5 +1,6 @@
-package com.nubank.capitalgains.business;
+package com.nubank.capitalgains.business.rules;
 
+import com.nubank.capitalgains.model.Simulation;
 import com.nubank.capitalgains.model.State;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class TaxValidator {
     private final State state;
-    private final List<String> taxResult = new ArrayList<>();;
+    private final List<String> taxResult = new ArrayList<>();
     private final List<ITaxValidationRule> rules = new ArrayList<>();
 
     public TaxValidator(State state) {
@@ -23,10 +24,10 @@ public class TaxValidator {
         taxResult.clear();
     }
 
-    public void validate(String info) {
+    public void validate(Simulation simulation) {
         rules.stream()
-                .filter(r -> r.IsValid(state,info))
-                .forEach(r -> taxResult.add(r.Execute(info)));
+                .filter(r -> r.IsValid(state,simulation.getOperation()))
+                .forEach(r -> taxResult.add(r.Execute(simulation)));
     }
 
     public String getTaxResult() {

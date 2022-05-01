@@ -1,12 +1,12 @@
 package com.nubank.capitalgains.model;
 
-public enum Operation {
+public enum OperationType {
     BUY("buy"),
     SELL("sell");
 
     private final String value;
 
-    Operation(String value) {
+    OperationType(String value) {
         this.value = value;
     }
 
@@ -15,8 +15,8 @@ public enum Operation {
         return value;
     }
 
-    public static Operation fromValue(String text) {
-        for (Operation b : Operation.values()) {
+    public static OperationType fromValue(String text) {
+        for (OperationType b : OperationType.values()) {
             if (String.valueOf(b.value).equals(text)) {
                 return b;
             }

@@ -1,5 +1,7 @@
 package com.nubank.capitalgains.model;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class Simulation {
     String operation;
-    Double unitcost;
-    Integer quantity;
+    BigDecimal unitcost;
+    BigInteger quantity;
 }

@@ -3,22 +3,26 @@ package com.nubank.capitalgains.business.rules;
 import com.nubank.capitalgains.model.OperationType;
 import com.nubank.capitalgains.model.Simulation;
 import com.nubank.capitalgains.model.State;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class SellValidationRule implements ITaxValidationRule {
+    private static final String ZERO = "0.0";
+    private static final String PERC = "0.2";
 
     @Override
     public String Execute(State state, Simulation simulation) {
-        Double cost = simulation.getQuantity() * state.getCurrentPrice();
-        Double sell = simulation.getQuantity() * simulation.getUnitcost();
-        state.setCurrentQuantity(state.calcCurrentQuantity(-simulation.getQuantity()));
-        state.setDeductibleLoss(state.calcDeductibleLoss(Math.max(cost - sell, 0)));
-        double profit = sell > cost ? 0.2 * (sell - cost) : 0.0;
-        return "{\"tax\":" + profit + "}";
+        BigDecimal cost = state.getCurrentPrice().multiply(new BigDecimal(simulation.getQuantity()));
+        BigDecimal sell = simulation.getUnitcost().multiply(new BigDecimal(simulation.getQuantity()));
+        state.setCurrentQuantity(state.calcCurrentQuantity(simulation.getQuantity().negate()));
+        state.setDeductibleLoss(state.calcDeductibleLoss(cost.subtract(sell).max(new BigDecimal(ZERO))));
+        BigDecimal taxValue = sell.compareTo(cost) > 0 ? sell.subtract(cost).multiply(new BigDecimal(PERC)) : new BigDecimal(ZERO);
+        return "{\"tax\":" + taxValue.setScale(2, RoundingMode.HALF_UP) + "}";
     }
 
     @Override
     public boolean IsValid(State state, String operationType) {
         return (OperationType.fromValue(operationType) == OperationType.SELL) &&
-                state.getDeductibleLoss() == 0;
+                state.getDeductibleLoss().compareTo(new BigDecimal(ZERO)) == 0;
     }
 }

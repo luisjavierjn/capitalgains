@@ -1,30 +1,35 @@
 package com.nubank.capitalgains.model;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class State {
-    Integer currentQuantity;
-    Double currentPrice;
-    Double deductibleLoss;
+    BigInteger currentQuantity;
+    BigDecimal currentPrice;
+    BigDecimal deductibleLoss;
 
     public void reset() {
-        currentQuantity = 0;
-        currentPrice = 0.0;
-        deductibleLoss = 0.0;
+        currentQuantity = new BigInteger("0");
+        currentPrice = new BigDecimal("0.0");
+        deductibleLoss = new BigDecimal("0.0");
     }
 
-    public Double calcWeightedAvgPrice(Integer newQuantity, Double newPrice) {
-        return ((currentQuantity * currentPrice) + (newQuantity * newPrice)) / (currentQuantity + newQuantity);
+    public BigDecimal calcWeightedAvgPrice(BigInteger newQuantity, BigDecimal newPrice) {
+        return currentPrice.multiply(new BigDecimal(currentQuantity))
+                .add(newPrice.multiply(new BigDecimal(newQuantity)))
+                .divide(new BigDecimal(currentQuantity.add(newQuantity)), 2, RoundingMode.HALF_UP);
     }
 
-    public Integer calcCurrentQuantity(Integer newQuantity) {
-        return (currentQuantity + newQuantity);
+    public BigInteger calcCurrentQuantity(BigInteger newQuantity) {
+        return currentQuantity.add(newQuantity);
     }
 
-    public Double calcDeductibleLoss(Double newLoss) {
-        return (deductibleLoss + newLoss);
+    public BigDecimal calcDeductibleLoss(BigDecimal newLoss) {
+        return deductibleLoss.add(newLoss);
     }
 }

@@ -1,6 +1,5 @@
 package com.nubank.capitalgains.business.rules;
 
-import com.nubank.capitalgains.model.OperationType;
 import com.nubank.capitalgains.model.Simulation;
 import com.nubank.capitalgains.model.State;
 

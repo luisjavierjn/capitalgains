@@ -3,6 +3,7 @@ USER root
 RUN mkdir -p /usr/app
 ENV APP_HOME=/usr/app/
 COPY . $APP_HOME
+RUN mkdir -p $APP_HOME/data
 WORKDIR $APP_HOME
 RUN gradle clean build
 ENTRYPOINT ["java", "-jar", "build/libs/capitalgains-0.0.1-SNAPSHOT.jar"]

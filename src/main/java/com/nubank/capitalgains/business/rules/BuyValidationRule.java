@@ -1,5 +1,6 @@
 package com.nubank.capitalgains.business.rules;
 
+import com.nubank.capitalgains.model.OperationType;
 import com.nubank.capitalgains.model.Simulation;
 import com.nubank.capitalgains.model.State;
 
@@ -13,5 +14,6 @@ public class BuyValidationRule implements ITaxValidationRule {
     @Override
     public boolean IsValid(State state, String operationType) {
         return true;
+        //return OperationType.fromValue(operationType) == OperationType.BUY;
     }
 }

@@ -56,7 +56,7 @@ both of them part of the *exceptions* package.
 
 # Compile and Run the Project;
 
-## Commandline using Gradle
+### Commandline using Gradle
 
 To compile this project is as easy as running the following command:
 ```
@@ -72,7 +72,40 @@ java -jar build/libs/capitalgains-0.0.1-SNAPSHOT.jar src/test/resources/case1_in
 ```
 ![img4](images/img4.png)  
 
-## Dockerfile
+If what we want is just to run the test cases we can use the following command:
+```
+gradle test
+```
 
+To run the test from a specific class
+```
+gradle test --tests com.nubank.capitalgains.CapitalgainsApplicationTests
+```
 
+To run the test from a specific method inside a class
+```
+gradle test --tests com.nubank.capitalgains.CapitalgainsApplicationTests.testCase1
+```
 
+### Dockerfile
+
+Run the following command to create the image *nubank/capital-gains*
+```
+sudo docker build -f Dockerfile -t nubank/capital-gains .
+```
+
+Now, there several way to run a container. The following is the simplest one, because it runs the jar using an input file by default called 
+*example_input.txt* which can be found into the folder src/test/resources
+```
+sudo docker run --network host -it nubank/capital-gains
+```
+
+Another way is referencing some inputs file inside the folder src/test/resources because the whole project is copied inside the image
+```
+sudo docker run --network host -it nubank/capital-gains src/test/resources/case7_input.txt
+```
+
+And the more general case is by creating a volume to share information between the host and the container
+```
+sudo docker run --network host -v /home/luisjavierjn/Projects/capitalgains/src/test/resources:/usr/app/data -it nubank/capital-gains data/case7_input.txt
+```

@@ -93,3 +93,10 @@ And the more general case is by creating a volume to share information between t
 ```
 sudo docker run --network host -v /home/luisjavierjn/Projects/capitalgains/src/test/resources:/usr/app/data -it nubank/capital-gains data/case7_input.txt
 ```
+
+# Test Cases
+
+There are test cases for every case mentioned in the assigment, all of them using the same approach as an integration test, calling the main method from 
+the main class and asserting the last message captured by the LOGGER.info. The coverage is shown in the following image:  
+![img5](images/img5.png)  
+

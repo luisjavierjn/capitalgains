@@ -1,7 +1,6 @@
 package com.nubank.capitalgains.business;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nubank.capitalgains.CapitalgainsApplication;
 import com.nubank.capitalgains.business.rules.TaxValidator;
 import com.nubank.capitalgains.exceptions.ReadLineException;
 import com.nubank.capitalgains.model.Simulation;
@@ -9,13 +8,9 @@ import com.nubank.capitalgains.model.State;
 import com.nubank.capitalgains.utils.FileReaderUtil;
 import java.io.IOException;
 import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 
 public class TaxService {
-    private static final Logger logger = LogManager.getLogger(CapitalgainsApplication.class);
-
     private final FileReaderUtil fileReaderUtil;
     private final TaxValidator taxValidator;
     private final ObjectMapper mapper;

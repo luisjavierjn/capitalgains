@@ -3,7 +3,6 @@ package com.nubank.capitalgains;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
-import com.nubank.capitalgains.business.TaxService;
 import com.nubank.capitalgains.exceptions.ReadLineException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,8 +23,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = CapitalgainsApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CapitalgainsApplicationTests {
-	private static final String EXAMPLE_INPUT = "example_input.data";
-	private static final String EXAMPLE_OUTPUT = "example_output.data";
+	private static final String EXAMPLE_INPUT = "example_input.txt";
+	private static final String EXAMPLE_OUTPUT = "example_output.txt";
 	private StringBuilder exampleOutput;
 
 	private StringBuilder loadJsonFile(String fileName) {

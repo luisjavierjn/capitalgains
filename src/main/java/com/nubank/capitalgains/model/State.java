@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class State {
+public class State implements Cloneable {
     BigInteger currentQuantity;
     BigDecimal currentPrice;
     BigDecimal deductibleLoss;
@@ -31,5 +31,19 @@ public class State {
 
     public BigDecimal calcDeductibleLoss(BigDecimal newLoss) {
         return deductibleLoss.add(newLoss);
+    }
+
+    @Override
+    public State clone() {
+        try {
+            State clone = (State) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            clone.currentQuantity = new BigInteger(this.currentQuantity.toString());
+            clone.currentPrice = new BigDecimal(this.currentPrice.toString());
+            clone.deductibleLoss = new BigDecimal(this.deductibleLoss.toString());
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

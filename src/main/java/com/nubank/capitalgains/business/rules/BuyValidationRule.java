@@ -11,6 +11,7 @@ public class BuyValidationRule implements ITaxValidationRule {
     public String Execute(State state, Simulation simulation) {
         state.setCurrentPrice(state.calcWeightedAvgPrice(simulation.getQuantity(),simulation.getUnitcost()));
         state.setCurrentQuantity(state.calcCurrentQuantity(simulation.getQuantity()));
+
         return RESPONSE;
     }
 

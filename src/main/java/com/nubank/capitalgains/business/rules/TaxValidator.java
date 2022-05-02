@@ -25,8 +25,9 @@ public class TaxValidator {
     }
 
     public void validate(Simulation simulation) {
+        State clone = state.clone();
         rules.stream()
-                .filter(r -> r.IsValid(state,simulation.getOperation()))
+                .filter(r -> r.IsValid(clone,simulation.getOperation()))
                 .forEach(r -> taxResult.add(r.Execute(state,simulation)));
     }
 

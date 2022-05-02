@@ -57,14 +57,16 @@ class CapitalgainsApplicationTests {
 	private StringBuilder loadJsonFile(String fileName) {
 		ClassLoader classLoader = getClass().getClassLoader();
 		StringBuilder stringBuilder = new StringBuilder();
-		try (InputStream inputStream = classLoader.getResourceAsStream(fileName);
-			 InputStreamReader streamReader =
-					 new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-			 BufferedReader reader = new BufferedReader(streamReader)) {
+		try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
+			assert inputStream != null;
+			try (InputStreamReader streamReader =
+						 new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+				 BufferedReader reader = new BufferedReader(streamReader)) {
 
-			String line;
-			while ((line = reader.readLine()) != null) {
-				stringBuilder.append(line).append("\n");
+				String line;
+				while ((line = reader.readLine()) != null) {
+					stringBuilder.append(line).append("\n");
+				}
 			}
 		} catch (IOException e) {
 			throw new ReadLineException("BufferedReader failed while reading line!",e);

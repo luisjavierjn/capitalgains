@@ -13,3 +13,5 @@ sudo docker run --network host -it nubank/capital-gains src/test/resources/case7
 
 #sudo docker run --network host -it nubank/capital-gains data/case7_input.txt  -> si tuviera COPY src/test/resources $APP_HOME/data
 sudo docker run --network host -v /home/luisjavierjn/Projects/capitalgains/src/test/resources:/usr/app/data -it nubank/capital-gains data/case7_input.txt
+
+gradle test #para correr solo los tests

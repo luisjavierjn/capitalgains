@@ -1,6 +1,6 @@
 # Technical Description
 
-This program was built using Java 11, SpringBoot and Gradle to handle dependencies. The initial code was generated through 
+This program was built on Ubuntu 20.04 using Java 11, SpringBoot and Gradle to handle dependencies. The initial code was generated through 
 [start.spring.io](https://start.spring.io/)  
 ![img1](images/img1.png)  
 
@@ -36,9 +36,9 @@ printed by console. Even though, we can trust data is correct and coherent, some
 custom Exceptions were created to have control regarding what it is shown on console, namely: *InputStreamException* and *ReadLineException*, 
 both of them part of the *exceptions* package.
 
-# Compile and Run the Project;
+# Compile and Run the Project
 
-### Commandline using Gradle
+### Using gradle
 
 To compile this project is as easy as running the following command:
 ```
@@ -53,6 +53,8 @@ To execute the jar with the file *case1_input.txt* from the resource folder, run
 java -jar build/libs/capitalgains-0.0.1-SNAPSHOT.jar src/test/resources/case1_input.txt
 ```
 ![img4](images/img4.png)  
+
+### Run tests cases
 
 If what we want is just to run the test cases we can use the following command:
 ```

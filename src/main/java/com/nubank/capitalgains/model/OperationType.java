@@ -10,11 +10,6 @@ public enum OperationType {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
-        return value;
-    }
-
     public static OperationType fromValue(String text) {
         for (OperationType b : OperationType.values()) {
             if (String.valueOf(b.value).equals(text)) {

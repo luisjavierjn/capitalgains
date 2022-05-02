@@ -7,7 +7,7 @@ import com.nubank.capitalgains.model.State;
 public class SellWithLossesValidationRule implements ITaxValidationRule {
 
     @Override
-    public String Execute(Simulation simulation) {
+    public String Execute(State state, Simulation simulation) {
         return null;
     }
 

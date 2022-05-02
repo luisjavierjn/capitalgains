@@ -6,7 +6,7 @@ import com.nubank.capitalgains.model.State;
 
 public interface ITaxValidationRule {
 
-    String Execute(Simulation simulation);
+    String Execute(State state, Simulation simulation);
 
     boolean IsValid(State state, String operationType);
 }

@@ -27,7 +27,7 @@ public class TaxValidator {
     public void validate(Simulation simulation) {
         rules.stream()
                 .filter(r -> r.IsValid(state,simulation.getOperation()))
-                .forEach(r -> taxResult.add(r.Execute(simulation)));
+                .forEach(r -> taxResult.add(r.Execute(state,simulation)));
     }
 
     public String getTaxResult() {
